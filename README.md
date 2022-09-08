@@ -31,6 +31,11 @@ sudo systemctl enable --now containerd
 
 # Verificar el status del service
 sudo systemctl status containerd
+
+# Install CNI Plugins
+wget https://github.com/containernetworking/plugins/releases/download/v1.1.1/cni-plugins-linux-amd64-v1.1.1.tgz
+sudo mkdir -p /opt/cni/bin
+sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz
 ```
 
 # Ejemplo 1
