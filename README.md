@@ -18,11 +18,11 @@ Material utilizado durante la conferencia de docker under the hood: introducció
 wget https://github.com/containerd/containerd/releases/download/v1.6.8/containerd-1.6.8-linux-amd64.tar.gz
 sudo tar Cxzvf /usr/local containerd-1.6.8-linux-amd64.tar.gz
 
-# Descargo y verifico la sha256sum de runc
+# Install runc
 wget https://github.com/opencontainers/runc/releases/download/v1.1.4/runc.amd64
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 
-# Activar el service
+# Activar el containerd como service
 wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 sudo mkdir -p /usr/local/lib/systemd/system/
 sudo mv containerd.service /usr/local/lib/systemd/system/
