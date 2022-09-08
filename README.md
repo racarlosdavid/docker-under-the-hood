@@ -10,7 +10,7 @@ Material utilizado durante la conferencia de docker under the hood: introducció
 - [ Slides ](/Slides)
 - [ Código ](/Code)
 
-### Comandos utilizados para el ejemplo de gRPC
+### Comandos utilizados para el ejemplo
 
 ## Configuracion containerd
 ```sh
