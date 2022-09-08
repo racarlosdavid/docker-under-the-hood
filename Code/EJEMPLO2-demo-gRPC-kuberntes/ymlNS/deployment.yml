@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: operaciones-aritmeticas
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-deployment
+  namespace: operaciones-aritmeticas
+  labels:
+    app: grpc-deployment
+spec:
+  selector:
+    matchLabels:
+      app: grpc-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grpc-deployment
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      hostname: servidor
+      containers:
+        - name: cliente
+          image: racarlosdavid/grpc_client_api
+          env:
+          - name: HOST
+            value: servidor
+          ports:
+            - containerPort: 2000
+        - name: servidor
+          image: racarlosdavid/grpc_server
+          ports:
+            - containerPort: 50051
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-grpc
+  namespace: operaciones-aritmeticas
+  labels:
+    app: grpc-deployment
+spec:
+  type: ClusterIP
+  selector:
+    app: grpc-deployment
+  ports:
+    - port: 2000
+      targetPort: 2000
+      protocol: TCP

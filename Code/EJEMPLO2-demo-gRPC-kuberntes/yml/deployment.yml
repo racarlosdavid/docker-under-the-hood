@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-deployment
+  labels:
+    app: grpc-deployment
+spec:
+  selector:
+    matchLabels:
+      app: grpc-deployment
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: grpc-deployment
+    spec:
+      hostname: grpc-pod-host
+      containers:
+        - name: grpc-client-api
+          image: racarlosdavid/grpc_client_api
+          env:
+          - name: HOST
+            value: grpc-pod-host
+          ports:
+            - containerPort: 2000
+        - name: grpc-server
+          image: racarlosdavid/grpc_server
+          ports:
+            - containerPort: 50051
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: grpc-deployment
+  name: svc-grpc
+spec:
+  type: ClusterIP
+  selector:
+    app: grpc-deployment
+  ports:
+    - port: 2000
+      targetPort: 2000
+      protocol: TCP
